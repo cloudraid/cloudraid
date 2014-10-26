@@ -2,3 +2,8 @@ extends layout
 
 block content
   h1 File Management
+
+  if !storageManager
+    h2 Can not list files. Please check your <a href="/settings">settings</a>.
+  else
+    span Type Of StorageManager: #{storageManager.type}
