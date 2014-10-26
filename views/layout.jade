@@ -4,4 +4,21 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header
+      a#logo(href='/') CloudRAID
+      #nav
+        if userdata
+          span User: #{userdata.name} (#{userdata.username})
+          | |
+          if userdata.isadmin
+            a(href='/users') Users
+            | |
+          a(href='/files') Files
+          | |
+          a(href='/settings') Settings
+          | |
+          a(href='/logout') Log Out
+        else
+          a(href='/login') Log In
+    section#content
+      block content

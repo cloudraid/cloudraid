@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 Settings
+  form(action='/settings',method='POST')
+    label Full Name:
+      input(name='name',value='#{userdata.name}')
+    label(of='settings') Settings:
+    textarea#settings(cols='80',rows='6',name='settings') #{userdata.settings}
+    label Current Password:
+      input(type='password',name='password')
+    label New Password:
+      input(type='password',name='password1')
+      span (empty field keeps the current one)
+    label Confirm New Password:
+      input(type='password',name='password2')
+    div
+      input(type='submit')

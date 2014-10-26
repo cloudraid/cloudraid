@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1 User Management
+
+  h2 List Of Current Users
+  table
+    thead
+      tr
+        th Username
+        th Full Name
+        th Is Admin
+        th Actions
+      tbody
+        each user in users
+          tr
+            td=user.username
+            td=user.name
+            td
+              if user.isadmin
+                | YES
+              else
+                | NO
+            td
+              if user.username !== userdata.username
+                a(href='/users/delete/#{user.username}',onclick='javascript:return confirm("Do you really want to delete #{user.username}?")') Delete
+
+  h2 Add New User
+  form(action='/users/add',method='POST')
+    label Username:
+      input(name='username')
+    label Full Name:
+      input(name='name')
+    label Password:
+      input(name='password1',type='password')
+    label Confirm Password:
+      input(name='password2',type='password')
+    label Is Admin:
+      input(name='isadmin',type='checkbox')
+    input(type='submit')

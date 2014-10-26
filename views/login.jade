@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1 Login
+  if failed
+    p Invalid Username and/or password.
+  form(method='post',action='/login')
+    label Username:
+      input(name='username')
+    label Password:
+      input(type='password',name='password')
+    input(type='submit')
