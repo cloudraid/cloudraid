@@ -7,3 +7,23 @@ block content
     h2 Can not list files. Please check your <a href="/settings">settings</a>.
   else
     span Type Of StorageManager: #{storageManager.type}
+
+    h2 Create File
+    form(action='/files/create',method='POST')
+      label Filename:
+        input(name='filename')
+      label File:
+        input(name='file',type='file')
+      input(type='submit')
+
+    h2 All Files
+    table
+      thead
+        tr
+          th Filename
+          th Hash
+        tbody
+          each file in files
+            tr
+              td=file.filename
+              td=file.hash
