@@ -9,11 +9,11 @@ block content
     span Type Of StorageManager: #{storageManager.type}
 
     h2 Create File
-    form(action='/files/create',method='POST')
+    form(action='/files/create',method='POST',enctype="multipart/form-data")
       label Filename:
-        input(name='filename')
+        input(name='filename', type='text')
       label File:
-        input(name='file',type='file')
+        input(name='data',type='file')
       input(type='submit')
 
     h2 All Files
