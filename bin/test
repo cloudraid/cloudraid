@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+var StorageManagerFactory = require('../lib/StorageManagerFactory');
+
+var storageManager;
+var filelist;
+var filename = 'test.txt';
+
+StorageManagerFactory.create('{"type":"raid1"}', function(err, storageManager) {
+    this.storageManager = storageManager;
+    storageManager.createFile(filename,'tmp/test.txt', function(err) {
+        testFileList(storageManager, function() {
+            readFile(storageManager, function() {
+                deleteFile(storageManager, function() {
+                });
+            });
+        });
+    });
+});
+
+function testFileList(storageManager, fn) {
+    storageManager.getFileList(function(err, filelist) {
+        this.filelist = filelist;
+        console.log(filelist);
+        fn();
+    });
+}
+
+function readFile(storageManager, fn) {
+    storageManager.readFile(filename, function(err, path) {
+        console.log('Path to file: ' + path);
+        fn();
+    });
+}
+
+function deleteFile(storageManager, fn) {
+    storageManager.deleteFile(filename, function(err) {
+        console.log('File ' + filename + ' deleted');
+        fn();
+    });
+}
+
