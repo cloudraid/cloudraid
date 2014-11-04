@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h1 Account Management
+
+  if !usedStorageProviders
+      h2 Can not list accounts. Please check your <a href="/settings">settings</a>.
+
+
+  h2 Add Account
+    form(action='/accounts/add',method='POST')
+      label Storage Provider:
+        select(name="type", type="text")
+          repeat
+            each storageProvider in availableStorageProviders
+              option(value="#{storageProvider.prototype.type}") #{storageProvider.prototype.displayName}
+              // TODO: prototype hier verwenden? muss doch ne alternative geben
+      input(type='submit', value="Add")
+
+
+  h2 All Accounts
+  table
+    thead
+      tr
+        th
+        th Storage Provider
+        th Connected
+      tbody
+        each storageProvider in usedStorageProviders
+          tr
+            td
+              img(class='logo' src='images/' + storageProvider.logoFile)
+            td #{storageProvider.displayName}
+            if storageProvider.authenticated
+              td User: #{storageProvider.username}
+            else
+              td
+                a(href=storageProvider.loginURL) Authenticate
