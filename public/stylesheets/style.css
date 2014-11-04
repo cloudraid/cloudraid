@@ -74,3 +74,7 @@ label span {
 #nav a, #nav span {
   margin: 4px;
 }
+
+.logo {
+  max-width: 50px;
+}

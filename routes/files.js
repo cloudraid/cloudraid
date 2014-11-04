@@ -4,8 +4,9 @@ var router = express.Router();
 var storManager = null;
 
 router.get('/', function(req, res) {
-  StorageManagerFactory.create(req.session.data.settings, function(err, storageManager) {
+  StorageManagerFactory.getCachedStorageManager(req.session.data.settings, function(err, storageManager) {
     storManager = storageManager;
+
     storageManager.getFileList(function(err, filelist) {
       res.render('files', {
         storageManager: storageManager,
