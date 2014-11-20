@@ -1,32 +1,62 @@
 var StorageManagerFactory = require('../lib/StorageManagerFactory');
 var express = require('express');
 var router = express.Router();
-var storManager = null;
+var storManager = {};
+
+function sm(req) {
+  return storManager[req.session.data.username];
+}
 
 router.get('/', function(req, res) {
-  StorageManagerFactory.create(req.session.data.settings, function(err, storageManager) {
-    storManager = storageManager;
-    storageManager.getFileList(function(err, filelist) {
-      res.render('files', {
-        storageManager: storageManager,
-        files: filelist
-      });
-    });
-
-  });
-});
-
-router.post('/create', function(req, res) {
-  console.log(req.body);
-  storManager.createFile(req.body.filename, req.body.data, function(err) {
+  StorageManagerFactory.create(req.session.data.username, req.session.data.settings, function(err, storageManager) {
     if (err) {
       res.render('error', {
         message: err,
         error: {}
       });
     } else {
-      res.redirect('/files');
+      storageManager.setup(function(err) {
+        req.session.storageManager = storageManager;
+        storManager[req.session.data.username] = storageManager
+
+        if (err) {
+          res.render('error', {
+            message: err,
+            error: {}
+          });
+        } else {
+          res.render('files', {
+            storageManager: storageManager
+          });
+        }
+      });
     }
+  });
+});
+
+router.get('/list', function(req, res) {;
+  sm(req).fileList(function(err, data) {
+    res.json(data);
+  });
+});
+
+router.post('/data/:filename', function(req, res) {
+  sm(req).createFile(req.params.filename, req.body, function(err) {
+    res.json({});
+  });
+});
+
+router.get('/data/:filename', function(req, res) {
+  sm(req).readFile(req.params.filename, function(err, data) {
+    res.setHeader('Content-Disposition', 'attachment; filename=' + req.params.filename);
+    res.setHeader('Content-Type', 'application/octet-stream');
+    res.send(data);
+  });
+});
+
+router.delete('/data/:filename', function(req, res) {
+  sm(req).deleteFile(req.params.filename, function(err) {
+    res.json({});
   });
 });
 
