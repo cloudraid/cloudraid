@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
     } else {
       storageManager.setup(function(err) {
         req.session.storageManager = storageManager;
-        storManager[req.session.data.username] = storageManager
+        storManager[req.session.data.username] = storageManager;
 
         if (err) {
           res.render('error', {
@@ -34,7 +34,7 @@ router.get('/', function(req, res) {
   });
 });
 
-router.get('/list', function(req, res) {;
+router.get('/list', function(req, res) {
   sm(req).fileList(function(err, data) {
     res.json(data);
   });

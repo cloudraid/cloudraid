@@ -12,7 +12,7 @@ router.post('/', function(req, res) {
       message: 'Password missmatch',
       error: {}
     });
-  } else {
+  } else {
     var oldPassword = req.body.password;
     var newPassword = req.body.password1;
     if (newPassword === '')

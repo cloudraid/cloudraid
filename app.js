@@ -40,7 +40,7 @@ function restrict(requireadmin) {
     } else {
       next();
     }
-  }
+  };
 }
 
 app.get('/logout', function(req, res){
