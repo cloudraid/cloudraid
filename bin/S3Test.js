@@ -63,8 +63,33 @@ var getobject = function(key) {
     });
 };
 
+var deleteobject = function(key) {
+    var params = {Bucket: 'g2-t2', Key: key};
+    s3.deleteObject(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else {
+            console.log("successfully deleted object with key - " + key);
+            if (data !== null) {
+                console.log("DeleteMarker: " + data.DeleteMarker +
+                    ", VersionId: " + data.VersionId);
+                console.log(data);
+            }
+        }
+    });
+};
+
+var listobjects = function() {
+    var params = {Bucket: 'g2-t2'};
+    s3.listObjects(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     console.log(data);           // successful response
+    });
+};
+
 //createbucket();
 //deletebucket();
 //listbuckets();
 //putobject('mykey','mybodyinsidetheobject');
 //getobject('mykey');
+//deleteobject('mykey');
+//listobjects();
