@@ -5,9 +5,9 @@ var storageManager;
 var filelist;
 var filename = 'test.txt';
 
-StorageManagerFactory.create('{"type":"raid1"}', function(err, storageManager) {
+StorageManagerFactory.create('user', '{"type":"raid1"}', function(err, storageManager) {
     this.storageManager = storageManager;
-    storageManager.createFile(filename,'tmp/test.txt', function(err) {
+    storageManager.createFile(filename, 'DATA', function(err) {
         testFileList(storageManager, function() {
             readFile(storageManager, function() {
                 deleteFile(storageManager, function() {
@@ -18,7 +18,7 @@ StorageManagerFactory.create('{"type":"raid1"}', function(err, storageManager) {
 });
 
 function testFileList(storageManager, fn) {
-    storageManager.getFileList(function(err, filelist) {
+    storageManager.fileList(function(err, filelist) {
         this.filelist = filelist;
         console.log(filelist);
         fn();
@@ -26,8 +26,8 @@ function testFileList(storageManager, fn) {
 }
 
 function readFile(storageManager, fn) {
-    storageManager.readFile(filename, function(err, path) {
-        console.log('Path to file: ' + path);
+    storageManager.readFile(filename, function(err, data) {
+        console.log('Data of file: ' + data);
         fn();
     });
 }
@@ -38,4 +38,3 @@ function deleteFile(storageManager, fn) {
         fn();
     });
 }
-

@@ -6,24 +6,16 @@ block content
   if !storageManager
     h2 Can not list files. Please check your <a href="/settings">settings</a>.
   else
-    span Type Of StorageManager: #{storageManager.type}
-
     h2 Create File
-    form(action='/files/create',method='POST',enctype="multipart/form-data")
-      label Filename:
-        input(name='filename', type='text')
-      label File:
-        input(name='data',type='file')
-      input(type='submit')
+    form(id='form',style='display:none')
+      input(id='file',onchange='fileChange()',type='file')
+    button(onclick='upload()') Upload a new file
 
     h2 All Files
     table
       thead
         tr
           th Filename
-          th Hash
-        tbody
-          each file in files
-            tr
-              td=file.filename
-              td=file.hash
+          th Actions
+        tbody(id='list')
+  script(src='/javascripts/files.js',type='text/javascript')
