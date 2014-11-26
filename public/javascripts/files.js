@@ -23,12 +23,20 @@ function updateFileList() {
 
   function createRow(item) {
     var tr = ce('tr');
+
     var td1 = tr.appendChild(ce('td'));
-    var td2 = tr.appendChild(ce('td'));
     td1.innerText = item.filename;
-    var a1 = td2.appendChild(ce('a'));
-    td2.appendChild(document.createTextNode(' '));
-    var a2 = td2.appendChild(ce('a'));
+
+    var td2 = tr.appendChild(ce('td'));
+    td2.innerText = filesize(item.size);
+
+    var td3 = tr.appendChild(ce('td'));
+    td3.innerText = moment(item.insertDate).format('D.M.YYYY HH:mm:ss');
+
+    var td4 = tr.appendChild(ce('td'));
+    var a1 = td4.appendChild(ce('a'));
+    td4.appendChild(document.createTextNode(' '));
+    var a2 = td4.appendChild(ce('a'));
     a1.innerText = 'Download';
     a1.href = '/files/data/' + item.filename;
     a1.target = '_blank';
