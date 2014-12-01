@@ -78,3 +78,7 @@ label span {
 .logo {
   max-width: 50px;
 }
+
+#createHeader, #listHeader {
+  position: relative;
+}

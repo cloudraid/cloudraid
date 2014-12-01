@@ -1,8 +1,12 @@
+var spinner = new Spinner( {radius: 8, left: '95%'} );
+
+
 function xhr(method, path, data, callback) {
   var x = new XMLHttpRequest()
   x.open(method, '/files/' + path, true);
   x.onreadystatechange = function () {
     if (x.readyState == 4) {
+      spinner.stop();
       callback(x.responseText);
     }
   };
@@ -43,6 +47,7 @@ function updateFileList() {
     a2.innerText = 'Delete';
     a2.href = '#';
     a2.onclick = function(e) {
+      spinner.spin(document.getElementById("listHeader"));
       deleteFile(item.filename);
       e.preventDefault();
     };
@@ -63,6 +68,7 @@ function updateFileList() {
 }
 
 function fileChange() {
+  spinner.spin(document.getElementById("createHeader"));
   var file = document.getElementById('file').files[0];
   xhr('POST', 'data/' + file.name, file, updateFileList);
 }
