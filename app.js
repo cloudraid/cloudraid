@@ -11,7 +11,6 @@ var checkCredentials = require('./lib/users').checkCredentials;
 
 var routes = require('./routes/index');
 var files = require('./routes/files');
-var accounts = require('./routes/accounts');
 var settings = require('./routes/settings');
 var users = require('./routes/users');
 
@@ -60,7 +59,6 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/files', restrict(), files);
-app.use('/accounts', restrict(), accounts);
 app.use('/settings', restrict(), settings);
 app.use('/users', restrict(true), users);
 
