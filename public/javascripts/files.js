@@ -32,15 +32,18 @@ function updateFileList() {
     td1.innerText = item.filename;
 
     var td2 = tr.appendChild(ce('td'));
-    td2.innerText = filesize(item.size);
+    td2.innerText = item.version;
 
     var td3 = tr.appendChild(ce('td'));
-    td3.innerText = moment(item.insertDate).format('D.M.YYYY HH:mm:ss');
+    td3.innerText = filesize(item.size);
 
     var td4 = tr.appendChild(ce('td'));
-    var a1 = td4.appendChild(ce('a'));
-    td4.appendChild(document.createTextNode(' '));
-    var a2 = td4.appendChild(ce('a'));
+    td4.innerText = moment(item.insertDate).format('D.M.YYYY HH:mm:ss');
+
+    var td5 = tr.appendChild(ce('td'));
+    var a1 = td5.appendChild(ce('a'));
+    td5.appendChild(document.createTextNode(' '));
+    var a2 = td5.appendChild(ce('a'));
     a1.innerText = 'Download';
     a1.href = '/files/data/' + item.filename;
     a1.target = '_blank';
