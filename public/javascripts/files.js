@@ -16,8 +16,8 @@ function xhr(method, path, data, callback) {
   x.send(data);
 }
 
-function deleteFile(filename) {
-  xhr('DELETE', 'data/' + filename, null, updateFileList);
+function deleteFile(filename, version) {
+  xhr('DELETE', 'data/' + filename + '/' + version, null, updateFileList);
 }
 
 function updateFileList() {
@@ -45,13 +45,13 @@ function updateFileList() {
     td5.appendChild(document.createTextNode(' '));
     var a2 = td5.appendChild(ce('a'));
     a1.innerText = 'Download';
-    a1.href = '/files/data/' + item.filename;
+    a1.href = '/files/data/' + item.filename + '/' + item.version;
     a1.target = '_blank';
     a2.innerText = 'Delete';
     a2.href = '#';
     a2.onclick = function(e) {
       spinner.spin(document.getElementById("listHeader"));
-      deleteFile(item.filename);
+      deleteFile(item.filename, item.version);
       e.preventDefault();
     };
     return tr;

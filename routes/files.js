@@ -46,16 +46,16 @@ router.post('/data/:filename', function(req, res) {
   });
 });
 
-router.get('/data/:filename', function(req, res) {
-  sm(req).readFile(req.params.filename, function(err, data) {
+router.get('/data/:filename/:version', function(req, res) {
+  sm(req).readFile(req.params.filename, req.params.version, function(err, data) {
     res.setHeader('Content-Disposition', 'attachment; filename=' + req.params.filename);
     res.setHeader('Content-Type', 'application/octet-stream');
     res.send(data);
   });
 });
 
-router.delete('/data/:filename', function(req, res) {
-  sm(req).deleteFile(req.params.filename, function(err) {
+router.delete('/data/:filename/:version', function(req, res) {
+  sm(req).deleteFile(req.params.filename, req.params.version, function(err) {
     res.json({});
   });
 });
