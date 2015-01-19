@@ -20,22 +20,34 @@ router.post('/', function(req, res) {
       newPassword = oldPassword;
     }
 
-      users.checkAdminCredentials(req.session.data.username, newPassword, function(err, data) {
+    users.update(req.session.userdata.username, oldPassword, newPassword, req.body.name, function(err) {
       if (err) {
         res.render('error', {
           message: err,
           error: {}
         });
       } else {
-        settings.update(req.body.settings, function(err) {
-          if (err) {
-            res.render('error', {
-              message: err,
-              error: {}
-            });
+        users.checkCredentials(req.session.userdata.username, newPassword, function(data) {
+          if(data) {
+            req.session.userdata = data;
+
+            if(req.session.userdata.isadmin) {
+              settings.update(req.body.settings, function(err) {
+                if (err) {
+                  res.render('error', {
+                    message: err,
+                    error: {}
+                  });
+                } else {
+                  req.session.settings = req.body.settings;
+                  res.redirect('/settings');
+                }
+              });
+            } else {
+              req.session.settings = req.body.settings;
+              res.redirect('/settings');
+            }
           } else {
-            data.settings = req.body.settings;
-            req.session.data = data;
             res.redirect('/settings');
           }
         });

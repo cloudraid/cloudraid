@@ -5,8 +5,9 @@ block content
   form(action='/settings',method='POST')
     label Full Name:
       input(name='name',value='#{userdata.name}')
-    label(of='settings') Settings:
-    textarea#settings(cols='80',rows='6',name='settings') #{userdata.settings}
+    if userdata.isadmin
+      label(of='settings') Settings:
+      textarea#settings(cols='80',rows='6',name='settings') #{settings}
     label Current Password:
       input(type='password',name='password')
     label New Password:

@@ -36,7 +36,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 function restrict(requireadmin) {
   return function(req, res, next) {
-    if (!req.session.data || !req.session.data.isadmin && requireadmin) {
+    if (!req.session.userdata || !req.session.userdata.isadmin && requireadmin) {
       res.redirect('/login');
     } else {
       next();
@@ -51,9 +51,11 @@ app.get('/logout', function(req, res){
 });
 
 app.use(function(req, res, next) {
-  var data = req.session.data;
-  if (data) {
-    res.locals.userdata = data;
+  if (req.session.userdata) {
+    res.locals.userdata = req.session.userdata;
+  }
+  if (req.session.settings) {
+    res.locals.settings = req.session.settings;
   }
   next();
 });
@@ -72,12 +74,12 @@ app.get('/login', function(req, res) {
 });
 
 app.post('/login', function(req, res) {
-  checkCredentials(req.body.username, req.body.password, function(data) {
-    if (data) {
+  checkCredentials(req.body.username, req.body.password, function(userdata) {
+    if (userdata) {
       req.session.regenerate(function() {
         readSettings(function(settings) {
-          data.settings = settings;
-          req.session.data = data;
+          req.session.userdata = userdata;
+          req.session.settings = settings;
           res.redirect('/files');
         });
       });
