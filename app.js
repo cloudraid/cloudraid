@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 
 var checkCredentials = require('./lib/users').checkCredentials;
+var readSettings = require('./lib/settings').read;
 
 var routes = require('./routes/index');
 var files = require('./routes/files');
@@ -74,8 +75,11 @@ app.post('/login', function(req, res) {
   checkCredentials(req.body.username, req.body.password, function(data) {
     if (data) {
       req.session.regenerate(function() {
-        req.session.data = data;
-        res.redirect('/files');
+        readSettings(function(settings) {
+          data.settings = settings;
+          req.session.data = data;
+          res.redirect('/files');
+        });
       });
     } else {
       req.session.loginFailed = true;
