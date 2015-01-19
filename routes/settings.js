@@ -4,7 +4,10 @@ var users = require('../lib/users');
 var settings = require('../lib/settings');
 
 router.get('/', function(req, res) {
-  res.render('settings');
+  settings.read(function(settings) {
+    req.session.settings = settings;
+    res.render('settings');
+  })
 });
 
 router.post('/', function(req, res) {
