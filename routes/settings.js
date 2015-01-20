@@ -6,6 +6,7 @@ var settings = require('../lib/settings');
 router.get('/', function(req, res) {
   settings.read(function(settings) {
     req.session.settings = settings;
+    res.locals.settings = settings;
     res.render('settings');
   })
 });
