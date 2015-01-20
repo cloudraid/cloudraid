@@ -4,11 +4,11 @@ var router = express.Router();
 var storManager = {};
 
 function sm(req) {
-  return storManager[req.session.data.username];
+  return storManager[req.session.userdata.username];
 }
 
 router.get('/', function(req, res) {
-  StorageManagerFactory.create(req.session.data.username, req.session.data.settings, function(err, storageManager) {
+  StorageManagerFactory.create(req.session.userdata.username, req.session.settings, function(err, storageManager) {
     if (err) {
       res.render('error', {
         message: err,
@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
     } else {
       storageManager.setup(function(err) {
         req.session.storageManager = storageManager;
-        storManager[req.session.data.username] = storageManager;
+        storManager[req.session.userdata.username] = storageManager;
 
         if (err) {
           res.render('error', {

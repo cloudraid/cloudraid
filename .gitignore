@@ -3,6 +3,8 @@ node_modules
 bin/settings
 bin/files
 bin/users
+bin/appSettings
 settings
 users
 files
+appSettings
