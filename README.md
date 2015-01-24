@@ -10,7 +10,7 @@ CloudRaid is a simple RAID-like solution for distributed cloud storages.
 
 ## How to set up Cloud Storage Providers
 * Log in with any admin account and navigate to the settings page
-* Settings can be entered as a JSON dictionary, consisting of the RAID mode and the list of storage provider accounts
+* Settings can be entered as a JSON dictionary, consisting of the RAID mode and the list of storage provider credentials. The latter need to include both app credentials and user access tokens.
 
 * Example:
 
