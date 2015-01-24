@@ -35,7 +35,8 @@ router.get('/', function(req, res) {
 });
 
 router.get('/list', function(req, res) {
-  sm(req).fileList(function(err, data) {
+  sm(req).info(function(err, data) {
+    console.log(JSON.stringify(data));
     res.json(data);
   });
 });

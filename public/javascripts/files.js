@@ -21,8 +21,58 @@ function deleteFile(filename, version) {
 }
 
 function updateFileList() {
+  spinner.spin(document.getElementById("listHeader"));
+
+
   function ce(tagname) {
     return document.createElement(tagname);
+  }
+
+  function img(src, title) {
+    var img = document.createElement('img');
+    img.src = src;
+
+    if(title) {
+      img.title = title;
+    }
+
+    return img;
+  }
+
+  function getProviderIndex(providerType, item) {
+    for (var i=0; i<=2; i++) {
+      if(item['providerType'+i] === providerType) {
+        return i;
+      }
+    }
+    console.log('Unknown provider: '+providerType);
+    return (-1);
+  }
+
+  function getProviderAttribute(providerType, attr, item) {
+    if(item[attr+providerType]) {
+      return item[attr+providerType];
+    } else {
+        return item[attr+getProviderIndex(providerType, item)];
+    }
+  }
+
+  function createProviderLogo(providerType, item) {
+    var logo = img('images/'+providerType+'.png', getProviderAttribute(providerType, 'hashRead', item));
+
+    if(item['isParity'+getProviderIndex(providerType, item)] === true) {
+      logo.className = 'parity';
+    }
+
+    if(getProviderAttribute(providerType, 'exists', item) === false) {
+      logo.className += ' missing';
+    } else {
+      if(getProviderAttribute(providerType, 'hashMatch', item) === false) {
+        logo.className += ' corrupt';
+      }
+    }
+
+    return logo;
   }
 
   function createRow(item) {
@@ -39,6 +89,18 @@ function updateFileList() {
 
     var td4 = tr.appendChild(ce('td'));
     td4.innerText = moment(item.insertDate).format('D.M.YYYY HH:mm:ss');
+
+
+    var partsTD = tr.appendChild(ce('td'));
+
+    var amazonLogo = createProviderLogo('amazon', item);
+    var boxLogo = createProviderLogo('box', item);
+    var dropboxLogo = createProviderLogo('dropbox', item);
+
+    partsTD.appendChild(amazonLogo);
+    partsTD.appendChild(boxLogo);
+    partsTD.appendChild(dropboxLogo);
+
 
     var td5 = tr.appendChild(ce('td'));
     var a1 = td5.appendChild(ce('a'));
@@ -67,6 +129,8 @@ function updateFileList() {
     for (var i = 0; i < json.length; ++i) {
       tbody.appendChild(createRow(json[i]));
     }
+
+    spinner.stop();
   });
 }
 

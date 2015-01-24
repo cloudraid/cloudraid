@@ -82,3 +82,20 @@ label span {
 #createHeader, #listHeader {
   position: relative;
 }
+
+#list img {
+  max-width: 50px;
+  padding: 5px;
+}
+
+#list img.parity {
+  opacity: 0.5;
+}
+
+.missing {
+  background-color: red;
+}
+
+.corrupt {
+  background-color: yellow;
+}
