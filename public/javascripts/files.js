@@ -50,7 +50,7 @@ function updateFileList() {
   }
 
   function getProviderAttribute(providerType, attr, item) {
-    if(item[attr+providerType]) {
+    if(attr+providerType in item) {
       return item[attr+providerType];
     } else {
         return item[attr+getProviderIndex(providerType, item)];
