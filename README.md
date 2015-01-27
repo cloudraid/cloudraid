@@ -19,5 +19,3 @@ CloudRaid is a simple RAID-like solution for distributed cloud storages.
           {"type": "amazon", "key": "", "secret": ""},
           {"type": "dropbox", "key": "", "secret": "", "token": ""}
         ]}
-        
-    * Replace `<RAIDMODE>` with either `raid1` or `raid5`. Enter the storage provider credentials as required.
