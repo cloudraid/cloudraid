@@ -8,6 +8,14 @@ block content
     if userdata.isadmin
       label(of='settings') Settings:
       textarea#settings(cols='80',rows='6',name='settings') #{settings}
+
+    label RAID Mode:
+      select(name='raidmode')
+        option(value='raid1', selected=(userdata.raidmode === 'raid1')) RAID 1
+        option(value='raid5', selected=(userdata.raidmode === 'raid5')) RAID 5
+
+    br
+    br
     label Current Password:
       input(type='password',name='password')
     label New Password:

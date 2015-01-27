@@ -8,7 +8,7 @@ function sm(req) {
 }
 
 router.get('/', function(req, res) {
-  StorageManagerFactory.create(req.session.userdata.username, req.session.settings, function(err, storageManager) {
+  StorageManagerFactory.create(req.session.userdata.username, req.session.userdata.raidmode, req.session.settings, function(err, storageManager) {
     if (err) {
       res.render('error', {
         message: err,

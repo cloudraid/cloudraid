@@ -91,6 +91,9 @@ function updateFileList() {
     td4.innerText = moment(item.insertDate).format('D.M.YYYY HH:mm:ss');
 
 
+console.log(JSON.stringify(item));
+console.log(item.filename);
+
     var partsTD = tr.appendChild(ce('td'));
 
     var amazonLogo = createProviderLogo('amazon', item);

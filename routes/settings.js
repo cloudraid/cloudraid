@@ -24,7 +24,7 @@ router.post('/', function(req, res) {
       newPassword = oldPassword;
     }
 
-    users.update(req.session.userdata.username, oldPassword, newPassword, req.body.name, function(err) {
+    users.update(req.session.userdata.username, oldPassword, newPassword, req.body.name, req.body.raidmode, function(err) {
       if (err) {
         res.render('error', {
           message: err,

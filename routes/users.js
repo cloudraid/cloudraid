@@ -22,7 +22,7 @@ router.post('/add', function(req, res) {
       error: {}
     });
   } else {
-    users.add(req.body.username, req.body.password1, req.body.name, req.body.isadmin, function(err) {
+    users.add(req.body.username, req.body.password1, req.body.name, req.body.raidmode, req.body.isadmin, function(err) {
       if (err) {
         res.render('error', {
           message: err,

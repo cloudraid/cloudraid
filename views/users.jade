@@ -9,6 +9,7 @@ block content
       tr
         th Username
         th Full Name
+        th RAID Mode
         th Is Admin
         th Actions
       tbody
@@ -16,6 +17,7 @@ block content
           tr
             td=user.username
             td=user.name
+            td=user.raidmode
             td
               if user.isadmin
                 | YES
@@ -31,6 +33,10 @@ block content
       input(name='username')
     label Full Name:
       input(name='name')
+    label RAID Mode:
+      select(name='raidmode')
+        option(value='raid1', selected) RAID 1
+        option(value='raid5') RAID 5
     label Password:
       input(name='password1',type='password')
     label Confirm Password:
